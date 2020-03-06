@@ -6,13 +6,14 @@
 {
     "name": "Mail tracking for Mailgun",
     "summary": "Mail tracking and Mailgun webhooks integration",
-    "version": "12.0.1.0.1",
+    "version": "13.0.1.0.0",
     "category": "Social Network",
     "website": "https://github.com/OCA/social",
-    "author": "Tecnativa, " "Odoo Community Association (OCA)",
+    "author": "Tecnativa, Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "application": False,
     "installable": True,
     "depends": ["mail_tracking"],
+    "external_dependencies": {"python": ["requests"]},
     "data": ["views/res_partner.xml", "views/mail_tracking_email.xml"],
 }

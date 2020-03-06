@@ -37,7 +37,7 @@ class TestMailgun(TransactionCase):
         self.token = "f1349299097a51b9a7d886fcb5c2735b426ba200ada6e9e149"
         self.timestamp = "1471021089"
         self.signature = (
-            "4fb6d4dbbe10ce5d620265dcd7a3c0b8" "ca0dede1433103891bc1ae4086e9d5b2"
+            "4fb6d4dbbe10ce5d620265dcd7a3c0b8ca0dede1433103891bc1ae4086e9d5b2"
         )
         self.env["ir.config_parameter"].set_param("mailgun.apikey", self.api_key)
         self.env["ir.config_parameter"].set_param("mail.catchall.domain", self.domain)
@@ -49,7 +49,7 @@ class TestMailgun(TransactionCase):
         )
         self.event = {
             "Message-Id": "<xxx.xxx.xxx-openerp-xxx-res.partner@test_db>",
-            "X-Mailgun-Sid": "WyIwNjgxZSIsICJ0b0BleGFtcGxlLmNvbSIsICI3MG" "I0MWYiXQ==",
+            "X-Mailgun-Sid": "WyIwNjgxZSIsICJ0b0BleGFtcGxlLmNvbSIsICI3MGI0MWYiXQ==",
             "token": self.token,
             "timestamp": self.timestamp,
             "signature": self.signature,
@@ -114,7 +114,7 @@ class TestMailgun(TransactionCase):
         self.env["ir.config_parameter"].set_param("mailgun.domain", "eu.example.com")
         self.test_event_delivered()
 
-    @mute_logger("odoo.addons.mail_tracking_mailgun.models" ".mail_tracking_email")
+    @mute_logger("odoo.addons.mail_tracking_mailgun.models.mail_tracking_email")
     def test_bad_signature(self):
         self.event.update({"event": "delivered", "signature": "bad_signature"})
         response = self.env["mail.tracking.email"].event_process(
@@ -122,7 +122,7 @@ class TestMailgun(TransactionCase):
         )
         self.assertEqual("ERROR: Signature", response)
 
-    @mute_logger("odoo.addons.mail_tracking_mailgun.models" ".mail_tracking_email")
+    @mute_logger("odoo.addons.mail_tracking_mailgun.models.mail_tracking_email")
     def test_bad_event_type(self):
         self.event.update({"event": "bad_event"})
         response = self.env["mail.tracking.email"].event_process(
@@ -130,7 +130,7 @@ class TestMailgun(TransactionCase):
         )
         self.assertEqual("ERROR: Event type not supported", response)
 
-    @mute_logger("odoo.addons.mail_tracking_mailgun.models" ".mail_tracking_email")
+    @mute_logger("odoo.addons.mail_tracking_mailgun.models.mail_tracking_email")
     def test_bad_db(self):
         self.event.update({"event": "delivered", "odoo_db": "bad_db"})
         response = self.env["mail.tracking.email"].event_process(
@@ -149,7 +149,7 @@ class TestMailgun(TransactionCase):
         )
         self.assertEqual("OK", response)
 
-    @mute_logger("odoo.addons.mail_tracking_mailgun.models" ".mail_tracking_email")
+    @mute_logger("odoo.addons.mail_tracking_mailgun.models.mail_tracking_email")
     def test_tracking_not_found(self):
         self.event.update({"event": "delivered", "tracking_email_id": "bad_id"})
         response = self.env["mail.tracking.email"].event_process(
