@@ -405,7 +405,6 @@ class TestMailgun(TransactionCase):
         }
         with self.assertRaises(UserError):
             self.partner.check_email_validity()
-        self.assertTrue(self.partner.email_bounced)
 
     @mock.patch(_packagepath + ".models.res_partner.requests")
     def test_email_validity_exceptions(self, mock_request):
